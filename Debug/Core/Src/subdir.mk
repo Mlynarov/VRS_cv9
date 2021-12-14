@@ -7,6 +7,7 @@
 C_SRCS += \
 ../Core/Src/display.c \
 ../Core/Src/gpio.c \
+../Core/Src/i2c.c \
 ../Core/Src/main.c \
 ../Core/Src/stm32f3xx_it.c \
 ../Core/Src/syscalls.c \
@@ -17,6 +18,7 @@ C_SRCS += \
 OBJS += \
 ./Core/Src/display.o \
 ./Core/Src/gpio.o \
+./Core/Src/i2c.o \
 ./Core/Src/main.o \
 ./Core/Src/stm32f3xx_it.o \
 ./Core/Src/syscalls.o \
@@ -27,6 +29,7 @@ OBJS += \
 C_DEPS += \
 ./Core/Src/display.d \
 ./Core/Src/gpio.d \
+./Core/Src/i2c.d \
 ./Core/Src/main.d \
 ./Core/Src/stm32f3xx_it.d \
 ./Core/Src/syscalls.d \
