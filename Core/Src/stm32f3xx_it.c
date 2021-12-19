@@ -239,7 +239,12 @@ void TIM3_IRQHandler(void)
 void I2C1_EV_IRQHandler(void)
 {
   /* USER CODE BEGIN I2C1_EV_IRQn 0 */
-
+  /* Check RXNE flag value in ISR register */
+	if(LL_I2C_IsActiveFlag_RXNE(I2C1))
+	{
+		/* Call function Master Reception Callback */
+		i2cHandler();
+	}
   /* USER CODE END I2C1_EV_IRQn 0 */
 
   /* USER CODE BEGIN I2C1_EV_IRQn 1 */

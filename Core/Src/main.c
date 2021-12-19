@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "display.h"
+#include "lps25hb.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,7 +46,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint8_t temp = 0;
+float mag[3], acc[3];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -97,19 +99,22 @@ int main(void)
   MX_TIM3_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-  LL_TIM_EnableIT_CC2(TIM2);
-  LL_TIM_EnableCounter(TIM2);
-  LL_TIM_EnableIT_CC2(TIM3);
-  LL_TIM_EnableCounter(TIM3);
+  //LL_TIM_EnableIT_CC2(TIM2);
+  //LL_TIM_EnableCounter(TIM2);
+  //LL_TIM_EnableIT_CC2(TIM3);
+  //LL_TIM_EnableCounter(TIM3);
 
   resetAllDigits();
+
+  lsm6ds0_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
+	  lsm6ds0_get_acc(acc, (acc+1), (acc+2));
+	  LL_mDelay(50);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
