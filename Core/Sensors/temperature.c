@@ -11,6 +11,8 @@
 
 #include "temperature.h"
 
+uint8_t addres = HTS_ADDRESS;
+
 uint8_t temperature_read_byte(uint8_t reg_addr)
 {
 	uint8_t data = 0;
@@ -50,7 +52,7 @@ int16_t HTS221_Get_Temperature()
 
 /*3. Read from 0x3C & 0x3D registers the value of T0_OUT*/
 /*4. Read from 0x3E & 0x3F registers the value of T1_OUT*/
- temperature_readArray(buffer,HTS221_TO_OUT,4 );
+ temperature_readArray(buffer,HTS221_T0_OUT,4 );
  T0_out = (((uint16_t)buffer[1])<<8) | (uint16_t)buffer[0];
 
  temperature_readArray(buffer,HTS221_T1_OUT,4 );

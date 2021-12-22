@@ -1,3 +1,5 @@
+"./Core/Sensors/compass.o"
+"./Core/Sensors/temperature.o"
 "./Core/Src/display.o"
 "./Core/Src/gpio.o"
 "./Core/Src/i2c.o"
