@@ -11,23 +11,23 @@
 
 #include "temperature.h"
 
-uint8_t addres = HTS_ADDRESS;
+uint8_t hts221_addres = HTS_ADDRESS;
 
 uint8_t temperature_read_byte(uint8_t reg_addr)
 {
 	uint8_t data = 0;
-	return *(i2c_master_read(&data, 1, reg_addr, addres, 0));
+	return *(i2c_master_read(&data, 1, reg_addr, hts221_addres, 0));
 }
 
 
 void temperature_readArray(uint8_t * data, uint8_t reg, uint8_t length)
 {
-	i2c_master_read(data, length, reg, addres, 1);
+	i2c_master_read(data, length, reg, hts221_addres, 1);
 }
 
 void temperature_write_byte(uint8_t reg_addr, uint8_t value)
 {
-	i2c_master_write(value, reg_addr, addres, 0);
+	i2c_master_write(value, reg_addr, hts221_addres, 0);
 }
 
 int16_t HTS221_Get_Temperature()
