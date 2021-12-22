@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define DIGIT_1_ON		LL_GPIO_SetOutputPin(GPIOA, digit1_Pin)
+#define DIGIT_1_ON		LL_GPIO_SetOutputPin(GPIOB, digit1_Pin)
 #define DIGIT_2_ON		LL_GPIO_SetOutputPin(GPIOA, digit2_Pin)
 #define DIGIT_3_ON		LL_GPIO_SetOutputPin(GPIOA, digit3_Pin)
 #define DIGIT_4_ON		LL_GPIO_SetOutputPin(GPIOA, digit4_Pin)

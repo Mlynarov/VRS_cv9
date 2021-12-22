@@ -150,6 +150,24 @@ void i2cHandler(void){
 	(ubReceiveIndex > 19) ? ubReceiveIndex = 0 : ubReceiveIndex;
 	end_of_read_flag = 0;
 }
+
+void I2C1_EV_IRQHandler(void)
+{
+  /* USER CODE BEGIN I2C1_EV_IRQn 0 */
+  /* Check RXNE flag value in ISR register */
+	if(LL_I2C_IsActiveFlag_RXNE(I2C1))
+	{
+		/* Call function Master Reception Callback */
+		aReceiveBuffer_read[ubReceiveIndex++] = LL_I2C_ReceiveData8(I2C1);
+		(ubReceiveIndex > 19) ? ubReceiveIndex = 0 : ubReceiveIndex;
+		end_of_read_flag = 0;
+	}
+  /* USER CODE END I2C1_EV_IRQn 0 */
+
+  /* USER CODE BEGIN I2C1_EV_IRQn 1 */
+
+  /* USER CODE END I2C1_EV_IRQn 1 */
+}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
