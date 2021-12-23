@@ -35,34 +35,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := VRS_cv8
+BUILD_ARTIFACT_NAME := VRS_cv9
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-VRS_cv8.elf \
+VRS_cv9.elf \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-VRS_cv8.list \
+VRS_cv9.list \
 
 OBJCOPY_BIN += \
-VRS_cv8.bin \
+VRS_cv9.bin \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: VRS_cv8.elf secondary-outputs
+main-build: VRS_cv9.elf secondary-outputs
 
 # Tool invocations
-VRS_cv8.elf: $(OBJS) $(USER_OBJS) D:\Tomas\ING\Vnorene_RS\GIT\zad9\VRS_cv9\STM32F303K8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "VRS_cv8.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\Tomas\ING\Vnorene_RS\GIT\zad9\VRS_cv9\STM32F303K8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="VRS_cv8.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+VRS_cv9.elf: $(OBJS) $(USER_OBJS) D:\Tomas\ING\Vnorene_RS\GIT\zad9\VRS_cv9\STM32F303K8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "VRS_cv9.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\Tomas\ING\Vnorene_RS\GIT\zad9\VRS_cv9\STM32F303K8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="VRS_cv9.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -71,19 +71,19 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-VRS_cv8.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "VRS_cv8.list"
+VRS_cv9.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "VRS_cv9.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-VRS_cv8.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "VRS_cv8.bin"
+VRS_cv9.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "VRS_cv9.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) VRS_cv8.bin VRS_cv8.elf VRS_cv8.list default.size.stdout
+	-$(RM) VRS_cv9.bin VRS_cv9.elf VRS_cv9.list default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)

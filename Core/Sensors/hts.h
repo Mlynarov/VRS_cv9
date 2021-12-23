@@ -31,14 +31,20 @@
 #define HTS221_T0_OUT				0x3C
 #define HTS221_T1_OUT				0x3
 #define HTS221_TEMP_OUT_L			0x2A
-#define	HTS221_TEMP_OUT_H			0x2B
+#define	HTS221_TEMP_OUT_H			0x2B//znamienko teploty 1=minusova teplota, 0 kladna teplota
 #define	HTS221_H0_RH_X2				0x30
 #define	HTS221_H0_T0_OUT_L			0x36
 #define	HTS221_H1_T0_OUT_L			0x3A
 #define HTS221_H_OUT				0x28
 
-
+uint8_t temperature_init(void);
 uint8_t temperature_read_byte(uint8_t reg_addr);
 void temperature_readArray(uint8_t * data, uint8_t reg, uint8_t length);
 void temperature_write_byte(uint8_t reg_addr, uint8_t value);
 int16_t HTS221_Get_Temperature();
+
+uint8_t humidity_init(void);
+uint8_t humidity_read_byte(uint8_t reg_addr);
+void humidity_readArray(uint8_t * data, uint8_t reg, uint8_t length);
+void humidity_write_byte(uint8_t reg_addr, uint8_t value);
+int16_t HTS221_Get_Humidity();

@@ -5,15 +5,18 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Core/Sensors/compass.c \
+../Core/Sensors/altitudePressure.c \
+../Core/Sensors/humiditi.c \
 ../Core/Sensors/temperature.c 
 
 OBJS += \
-./Core/Sensors/compass.o \
+./Core/Sensors/altitudePressure.o \
+./Core/Sensors/humiditi.o \
 ./Core/Sensors/temperature.o 
 
 C_DEPS += \
-./Core/Sensors/compass.d \
+./Core/Sensors/altitudePressure.d \
+./Core/Sensors/humiditi.d \
 ./Core/Sensors/temperature.d 
 
 
@@ -24,7 +27,7 @@ Core/Sensors/%.o: ../Core/Sensors/%.c Core/Sensors/subdir.mk
 clean: clean-Core-2f-Sensors
 
 clean-Core-2f-Sensors:
-	-$(RM) ./Core/Sensors/compass.d ./Core/Sensors/compass.o ./Core/Sensors/temperature.d ./Core/Sensors/temperature.o
+	-$(RM) ./Core/Sensors/altitudePressure.d ./Core/Sensors/altitudePressure.o ./Core/Sensors/humiditi.d ./Core/Sensors/humiditi.o ./Core/Sensors/temperature.d ./Core/Sensors/temperature.o
 
 .PHONY: clean-Core-2f-Sensors
 
