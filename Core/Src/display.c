@@ -160,6 +160,9 @@ void displayLetter(char letter){
 		case '_':
 			setLine();
 			break;
+		case '-':
+			setDash();
+			break;
 
 
 		case '1':
@@ -662,4 +665,8 @@ void setLine(void){
 // and dot to end
 void setDot(void){
 	LL_GPIO_ResetOutputPin(GPIOB, segmentDP_Pin);
+}
+
+void setDash(void){
+	LL_GPIO_ResetOutputPin(GPIOB, segmentG_Pin);
 }

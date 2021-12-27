@@ -72,6 +72,7 @@ void setZero(void);
 
 void setLine(void);
 void setDot(void);
+void setDash(void);
 
 
 
