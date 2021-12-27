@@ -39,9 +39,9 @@ uint8_t humidity_init(void)
 
 	LL_mDelay(100);
 
-	uint8_t val = humidity_read_byte(HTS221_WHO_AM_I	);
+	uint8_t val = humidity_read_byte(HTS_WHO_AM_I	);
 
-	if(val == HTS221_WHO_AM_I_DEFAULT)
+	if(val == HTS_WHO_AM_I_DEFAULT)
 	{
 		status = 1;
 	}
@@ -54,7 +54,7 @@ uint8_t humidity_init(void)
 	//acc device init
 
 	uint8_t ctrl1 = 8 << 4; // +-2g res
-	humidity_write_byte(HTS221_CTRL_REG1, ctrl1);
+	humidity_write_byte(HTS_CTRL_REG1, ctrl1);
 
 	return status;
 }
@@ -68,21 +68,21 @@ int16_t HTS221_Get_Humidity()
 
 /* 1. Read H0_rH and H1_rH coefficients*/
 
-	humidity_readArray(buffer,HTS221_H0_RH_X2,2);
+	humidity_readArray(buffer,HTS_H0_RH_X2,2);
 	H0_rh = buffer[0]>>1;
 	H1_rh = buffer[1]>>1;
 /*2. Read H0_T0_OUT */
 
-	humidity_readArray(buffer,HTS221_H0_T0_OUT_L,2);
+	humidity_readArray(buffer,HTS_H0_T0_OUT_L,2);
 	H0_T0_out = (((uint16_t)buffer[1])<<8) | (uint16_t)buffer[0];
 
 /*3. Read H1_T0_OUT */
-	humidity_readArray(buffer,HTS221_H1_T0_OUT_L,2);
+	humidity_readArray(buffer,HTS_H1_T0_OUT_L,2);
 	H1_T0_out = (((uint16_t)buffer[1])<<8) | (uint16_t)buffer[0];
 
 /*4. Read H_T_OUT */
 
-	humidity_readArray(buffer,HTS221_H_OUT,2);
+	humidity_readArray(buffer,HTS_H_OUT,2);
 	H_T_out = (((uint16_t)buffer[1])<<8) | (uint16_t)buffer[0];
 
 /*5. Compute the RH [%] value by linear interpolation */

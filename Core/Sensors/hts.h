@@ -21,21 +21,24 @@
 #include "i2c.h"
 
 #define HTS_ADDRESS					0xBE
-#define HTS221_WHO_AM_I_DEFAULT		0xBC
-#define HTS221_WHO_AM_I				0x0F
-#define HTS221_CTRL_REG1			0x20
-#define HTS221_CTRL_REG_SETUP		0x81
-#define HTS221_STATUS_REG			0x27
-#define HTS221_TO_DEGC_REG			0x32
-#define HTS221_MSB_T1_T0			0x35
-#define HTS221_T0_OUT				0x3C
-#define HTS221_T1_OUT				0x3
-#define HTS221_TEMP_OUT_L			0x2A
-#define	HTS221_TEMP_OUT_H			0x2B//znamienko teploty 1=minusova teplota, 0 kladna teplota
-#define	HTS221_H0_RH_X2				0x30
-#define	HTS221_H0_T0_OUT_L			0x36
-#define	HTS221_H1_T0_OUT_L			0x3A
-#define HTS221_H_OUT				0x28
+#define HTS_WHO_AM_I_DEFAULT		0xBC
+#define HTS_WHO_AM_I				0x0F
+
+#define HTS_CTRL_REG1				0x20
+#define HTS_CTRL_REG_SETUP			0x81
+#define HTS_STATUS_REG				0x27
+#define HTS_TO_DEGC_REG				0x32
+#define HTS_MSB_T1_T0				0x35
+
+#define HTS_T0_OUT					0x3C
+#define HTS_T1_OUT					0x3E
+#define HTS_T_OUT_Low				0x2A
+#define	HTS_T_OUT_High				0x2B//znamienko teploty 1=minusova teplota, 0 kladna teplota
+
+#define	HTS_H0_RH_X2				0x30
+#define	HTS_H0_T0_OUT_L				0x36
+#define	HTS_H1_T0_OUT_L				0x3A
+#define HTS_H_OUT					0x28
 
 uint8_t temperature_init(void);
 uint8_t temperature_read_byte(uint8_t reg_addr);

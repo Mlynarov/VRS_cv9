@@ -39,9 +39,9 @@ uint8_t temperature_init(void)
 
 	LL_mDelay(100);
 
-	uint8_t val = temperature_read_byte(HTS221_WHO_AM_I	);
+	uint8_t val = temperature_read_byte(HTS_WHO_AM_I	);
 
-	if(val == HTS221_WHO_AM_I_DEFAULT)
+	if(val == HTS_WHO_AM_I_DEFAULT)
 	{
 		status = 1;
 	}
@@ -54,7 +54,7 @@ uint8_t temperature_init(void)
 	//acc device init
 
 	uint8_t ctrl1 = 8 << 4; // +-2g res
-	temperature_write_byte(HTS221_CTRL_REG1, ctrl1);
+	temperature_write_byte(HTS_CTRL_REG1, ctrl1);
 
 	return status;
 }
@@ -63,14 +63,16 @@ int16_t HTS221_Get_Temperature()
 {
  int16_t T0_out, T1_out, T_out, T0_degC_x8_u16, T1_degC_x8_u16;
  int16_t T0_degC, T1_degC, value;
- uint8_t buffer[4], tmp;
+ uint8_t buffer[4], tmp,sign;
  int32_t tmp32;
 
+ sign=00000001;
+
 /*1. Read from 0x32 & 0x33 registers the value of coefficients T0_degC_x8 and T1_degC_x8*/
- temperature_readArray(buffer,HTS221_TO_DEGC_REG,2);
+ temperature_readArray(buffer,HTS_TO_DEGC_REG,2);
 
 /*2. Read from 0x35 register the value of the MSB bits of T1_degC and T0_degC */
- tmp=temperature_read_byte(HTS221_MSB_T1_T0);
+ tmp=temperature_read_byte(HTS_MSB_T1_T0);
 
 
 /*Calculate the T0_degC and T1_degC values*/
@@ -80,15 +82,15 @@ int16_t HTS221_Get_Temperature()
  T1_degC = T1_degC_x8_u16>>3;
 
 /*3. Read from 0x3C & 0x3D registers the value of T0_OUT*/
- temperature_readArray(buffer,HTS221_T0_OUT,4 );
+ temperature_readArray(buffer,HTS_T0_OUT,4 );
  T0_out = (((uint16_t)buffer[1])<<8) | (uint16_t)buffer[0];
 
  /*4. Read from 0x3E & 0x3F registers the value of T1_OUT*/
- temperature_readArray(buffer,HTS221_T1_OUT,4 );
+ temperature_readArray(buffer,HTS_T1_OUT,4 );
  T1_out = (((uint16_t)buffer[3])<<8) | (uint16_t)buffer[2];
 
 /* 5.Read from 0x2A & 0x2B registers the value T_OUT (ADC_OUT).*/
- temperature_readArray(buffer,HTS221_T0_OUT,2 );
+ temperature_readArray(buffer,HTS_T0_OUT,2 );
  T_out = (((uint16_t)buffer[1])<<8) | (uint16_t)buffer[0];
 
 
@@ -97,6 +99,13 @@ int16_t HTS221_Get_Temperature()
  value = tmp32 /(T1_out - T0_out) + T0_degC*10;
 
 // temperature_write_byte(HTS221_CTRL_REG1,value);//neni som si isty reg_addresou
+
+ //podmienka pre zistenie ci je teplota kladna alebo zaporna
+ if(HTS_T_OUT_High==sign){
+	 value = value*(-1);
+ }
+
+
  return value;
 }
 
