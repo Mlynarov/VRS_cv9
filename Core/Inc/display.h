@@ -18,6 +18,7 @@
 #define DIGIT_4_ON		LL_GPIO_SetOutputPin(GPIOA, digit4_Pin)
 #define DIGIT_TIME_ON	LL_GPIO_SetOutputPin(GPIOA, digitTime_Pin)
 
+void setDisplayText(char text[15]);
 void shiftDisplayText(void);
 void updateDisplay(void);
 void displayLetter(char letter);

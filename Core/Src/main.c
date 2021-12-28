@@ -48,6 +48,7 @@
 /* USER CODE BEGIN PV */
 uint8_t temp = 0;
 float mag[3], acc[3];
+char displayText[15];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -96,27 +97,32 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM2_Init();
-  MX_TIM3_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-  LL_TIM_EnableIT_CC2(TIM2);
+  //LL_TIM_EnableIT_CC2(TIM2);
+  LL_TIM_EnableIT_UPDATE(TIM2);
   LL_TIM_EnableCounter(TIM2);
-  LL_TIM_EnableIT_CC2(TIM3);
-  LL_TIM_EnableCounter(TIM3);
+
+  lsm6ds0_init();
+  temperature_init();
+  pressure_init();
 
   resetAllDigits();
 
-  lsm6ds0_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  //DIGIT_2_ON;
-	  //setAllSegments();
-	  lsm6ds0_get_acc(acc, (acc+1), (acc+2));
+	  //lsm6ds0_get_acc(acc, (acc+1), (acc+2));
+	  printTemperature();
+	  float altitude = get_altitude();
+
+
+	  //readI2C();
 	  LL_mDelay(50);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -158,7 +164,30 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void printTemperature(){
+	char valueString[15];
+	int16_t temperature = HTS221_Get_Temperature();
+	sprintf(valueString, "%d", temperature);
+	memset(displayText, '\0', 15);
+	strcat(displayText, "tEMP_");
+	if(valueString[0]=='-'){
+		strncat(displayText, valueString, 3);
+		strcat(displayText, ".");
+		strncat(displayText, &valueString[3],1);
+	}
+	else if(temperature > 999){
+		strcat(displayText, "99.9");
+	}
+	else if(temperature < (-999)){
+		strcat(displayText, "-99.9");
+	}
+	else{
+		strncat(displayText, valueString, 2);
+		strcat(displayText, ".");
+		strncat(displayText, &valueString[2],1);
+	}
+	setDisplayText(displayText);
+}
 /* USER CODE END 4 */
 
 /**

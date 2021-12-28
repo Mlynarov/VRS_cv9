@@ -95,6 +95,8 @@ void Error_Handler(void);
 #define segmentE_GPIO_Port GPIOA
 #define digit3_Pin LL_GPIO_PIN_12
 #define digit3_GPIO_Port GPIOA
+#define button_Pin LL_GPIO_PIN_3
+#define button_GPIO_Port GPIOB
 #define segmentG_Pin LL_GPIO_PIN_4
 #define segmentG_GPIO_Port GPIOB
 #define segmentD_Pin LL_GPIO_PIN_5
@@ -112,7 +114,7 @@ void Error_Handler(void);
                                                                  0 bit  for subpriority */
 #endif
 /* USER CODE BEGIN Private defines */
-
+void readI2C(void);
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

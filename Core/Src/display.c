@@ -9,9 +9,15 @@
 uint8_t updateDigit = 1;
 uint8_t displayTextPos = 0;
 uint8_t direction = 0;
+uint16_t counter = 0;
+char displayString[15];
+
+void setDisplayText(char text[15]){
+	strncpy(displayString, &text[0],15);
+	int x=0;
+}
 
 void updateDisplay(){
-	char displayString[] = "MICHAL_MOLnAr_98352";
 	for(int i = 1; i<5; i++){
 		switch(updateDigit){
 				case 1:
@@ -39,11 +45,16 @@ void updateDisplay(){
 			LL_mDelay(2);
 			resetAllDigits();
 	}
+	counter +=1;
+	if(counter >= 100){
+		shiftDisplayText();
+		counter = 0;
+	}
 
 }
 
 void shiftDisplayText(){
-	if(displayTextPos < (20-4-1) && direction == 0){
+	/*if(displayTextPos < (20-4-1) && direction == 0){
 		displayTextPos = displayTextPos+1;
 	}
 	else if(displayTextPos >= (20-4-1) && direction == 0){
@@ -56,7 +67,24 @@ void shiftDisplayText(){
 	}
 	else if(displayTextPos > 0 && direction == 1){
 		displayTextPos = displayTextPos-1;
+	}*/
+	if(displayString[0] != '\0'){
+		if(direction == 0 && displayString[displayTextPos+4] != '\0'){
+			displayTextPos = displayTextPos+1;
+		}
+		else if(direction == 0 && displayString[displayTextPos+4] == '\0'){
+			direction = 1;
+			displayTextPos = displayTextPos-1;
+		}
+		else if(displayTextPos <= 0 && direction == 1){
+			direction = 0;
+			displayTextPos = displayTextPos+1;
+		}
+		else if(displayTextPos > 0 && direction == 1){
+			displayTextPos = displayTextPos-1;
+		}
 	}
+
 }
 
 void displayLetter(char letter){
@@ -225,11 +253,11 @@ void resetAllSegments(void){
 
 void resetAllDigits(void)
 {
-	LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_2);
-	LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_5);
-	LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_4);
-	LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_6);
-	LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_7);
+	LL_GPIO_ResetOutputPin(GPIOB, digit1_Pin);
+	LL_GPIO_ResetOutputPin(GPIOA, digit2_Pin);
+	LL_GPIO_ResetOutputPin(GPIOA, digit3_Pin);
+	LL_GPIO_ResetOutputPin(GPIOA, digit4_Pin);
+	LL_GPIO_ResetOutputPin(GPIOA, digitTime_Pin);
 }
 
 void setA(void){
