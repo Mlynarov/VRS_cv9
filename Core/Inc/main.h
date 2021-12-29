@@ -115,7 +115,10 @@ void Error_Handler(void);
                                                                  0 bit  for subpriority */
 #endif
 /* USER CODE BEGIN Private defines */
-void readI2C(void);
+void printTemperature(void);
+void printHumidity(void);
+void printPressure(void);
+void printAltitude(void);
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

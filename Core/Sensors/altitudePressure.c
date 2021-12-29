@@ -60,9 +60,9 @@ float get_pressure()
  uint8_t pressure_low,pressure_mid,pressure_high;
  float pressure,tmp=0;
 
- pressure_low=LPS_PRESS_OUT_XL;
- pressure_mid= LPS_PRESS_OUT_L;
- pressure_high=LPS_PRESS_OUT_H;
+ pressure_low = altPress_read_byte(LPS_PRESS_OUT_XL);
+ pressure_mid = altPress_read_byte(LPS_PRESS_OUT_L);
+ pressure_high = altPress_read_byte(LPS_PRESS_OUT_H);
 
  //vypocitanie tlaku strana 15 v datasheete uvedenom v altitudePressure.h
  tmp=pressure_high << 16|pressure_mid<<8|pressure_low;

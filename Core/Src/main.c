@@ -27,6 +27,9 @@
 /* USER CODE BEGIN Includes */
 #include "display.h"
 #include "lps25hb.h"
+#include "altitudePressure.h"
+#include "hts.h"
+#include <math.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,7 +52,7 @@
 uint8_t temp = 0;
 float mag[3], acc[3];
 char displayText[15];
-uint8_t mode;
+uint8_t mode = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -106,6 +109,7 @@ int main(void)
 
   lsm6ds0_init();
   temperature_init();
+  humidity_init();
   pressure_init();
 
   resetAllDigits();
@@ -121,9 +125,14 @@ int main(void)
 		  printTemperature();
 	  }
 	  else if(mode == 1){
-		  float altitude = get_altitude();
+		  printHumidity();
 	  }
-
+	  else if(mode == 2){
+		  printPressure();
+	  }
+	  else if(mode == 3){
+		  printAltitude();
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -165,7 +174,7 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void printTemperature(){
+void printTemperature(void){
 	char valueString[15];
 	int16_t temperature = HTS221_Get_Temperature();
 	sprintf(valueString, "%d", temperature);
@@ -189,6 +198,56 @@ void printTemperature(){
 	}
 	setDisplayText(displayText);
 }
+
+void printHumidity(void){
+	char valueString[15];
+	int16_t humidity = HTS221_Get_Humidity();
+	sprintf(valueString, "%d", humidity);
+	memset(displayText, '\0', 15);
+	strcat(displayText, "HUM_");
+	strncat(displayText, valueString, 2);
+	setDisplayText(displayText);
+}
+
+void printPressure(void){
+	char valueString[15];
+	float pressure = 0;
+	pressure = (float)get_pressure();
+	gcvt(pressure, 6, valueString);
+	memset(displayText, '\0', 15);
+	strcat(displayText, "bar_");
+	strcat(displayText, valueString);
+	setDisplayText(displayText);
+}
+
+void printAltitude(void){
+	char valueString[15];
+	int16_t temperature = HTS221_Get_Temperature();
+	float pressure = (float)get_pressure();
+
+	float tempVar1 = powf((1013.25/pressure),1/5.257)-1;
+	float tempVar2 = (float)temperature/10+273.15;
+	float altitude = (tempVar1*tempVar2)/0.0065;
+
+	memset(displayText, '\0', 15);
+	int altitudeInt = (int)floor(10*altitude);
+	if(altitudeInt>=0){
+		sprintf(valueString, "%05d", altitudeInt);
+		strcat(displayText, "ALt_");
+		strncat(displayText, valueString, 4);
+		strcat(displayText, ".");
+		strncat(displayText, &valueString[4],1);
+	}
+	else if(altitudeInt<0){
+		sprintf(valueString, "%06d", altitudeInt);
+		strcat(displayText, "ALt_");
+		strncat(displayText, valueString, 5);
+		strcat(displayText, ".");
+		strncat(displayText, &valueString[5],1);
+	}
+	setDisplayText(displayText);
+}
+
 /* USER CODE END 4 */
 
 /**
