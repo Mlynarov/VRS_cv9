@@ -10,43 +10,48 @@ uint8_t updateDigit = 1;
 uint8_t displayTextPos = 0;
 uint8_t direction = 0;
 uint16_t counter = 0;
+uint8_t shorter = 0;
 char displayString[15];
 
 void setDisplayText(char text[15]){
 	strncpy(displayString, &text[0],15);
-	int x=0;
+	shorter = 0;
 }
 
 void updateDisplay(){
+	uint8_t shift = 0;
 	for(int i = 1; i<5; i++){
 		switch(updateDigit){
-				case 1:
-					DIGIT_1_ON;
-					resetAllSegments();
-					displayLetter(displayString[displayTextPos]);
-					break;
-				case 2:
-					DIGIT_2_ON;
-					resetAllSegments();
-					displayLetter(displayString[displayTextPos+1]);
-					break;
-				case 3:
-					DIGIT_3_ON;
-					resetAllSegments();
-					displayLetter(displayString[displayTextPos+2]);
-					break;
-				case 4:
-					DIGIT_4_ON;
-					resetAllSegments();
-					displayLetter(displayString[displayTextPos+3]);
-					break;
-			}
-			updateDigit = (updateDigit < 4) ? updateDigit+1 : 1;
-			LL_mDelay(2);
-			resetAllDigits();
+			case 1:
+				DIGIT_1_ON;
+				resetAllSegments();
+
+				break;
+			case 2:
+				DIGIT_2_ON;
+				resetAllSegments();
+				break;
+			case 3:
+				DIGIT_3_ON;
+				resetAllSegments();
+				break;
+			case 4:
+				DIGIT_4_ON;
+				resetAllSegments();
+				break;
+		}
+		displayLetter(displayString[displayTextPos+updateDigit-1+shift]);
+		if(displayString[displayTextPos+updateDigit] == '.'){
+			shift = 1;
+			shorter = 1;
+			setDot();
+		}
+		updateDigit = (updateDigit < 4) ? updateDigit+1 : 1;
+		LL_mDelay(2);
+		resetAllDigits();
 	}
 	counter +=1;
-	if(counter >= 100){
+	if(counter >= 50){
 		shiftDisplayText();
 		counter = 0;
 	}
@@ -54,31 +59,15 @@ void updateDisplay(){
 }
 
 void shiftDisplayText(){
-	/*if(displayTextPos < (20-4-1) && direction == 0){
-		displayTextPos = displayTextPos+1;
-	}
-	else if(displayTextPos >= (20-4-1) && direction == 0){
-		direction = 1;
-		displayTextPos = displayTextPos-1;
-	}
-	else if(displayTextPos <= 0 && direction == 1){
-		direction = 0;
-		displayTextPos = displayTextPos+1;
-	}
-	else if(displayTextPos > 0 && direction == 1){
-		displayTextPos = displayTextPos-1;
-	}*/
 	if(displayString[0] != '\0'){
-		if(direction == 0 && displayString[displayTextPos+4] != '\0'){
+		if(direction == 0 && displayString[displayTextPos+4+shorter] != '\0'){
 			displayTextPos = displayTextPos+1;
 		}
-		else if(direction == 0 && displayString[displayTextPos+4] == '\0'){
+		else if(direction == 0 && displayString[displayTextPos+4+shorter] == '\0'){
 			direction = 1;
-			displayTextPos = displayTextPos-1;
 		}
 		else if(displayTextPos <= 0 && direction == 1){
 			direction = 0;
-			displayTextPos = displayTextPos+1;
 		}
 		else if(displayTextPos > 0 && direction == 1){
 			displayTextPos = displayTextPos-1;

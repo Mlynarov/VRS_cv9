@@ -42,7 +42,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+extern uint8_t mode;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -200,6 +200,32 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles EXTI line 3 interrupt.
+  */
+void EXTI3_IRQHandler(void)
+{
+  /* USER CODE BEGIN EXTI3_IRQn 0 */
+
+  /* USER CODE END EXTI3_IRQn 0 */
+  if (LL_EXTI_IsActiveFlag_0_31(LL_EXTI_LINE_3) != RESET)
+  {
+    /* USER CODE BEGIN LL_EXTI_LINE_3 */
+    if(mode == 3){
+		mode = 0;
+	}
+    else{
+		mode++;
+	}
+	LL_mDelay(100);
+	LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
+    /* USER CODE END LL_EXTI_LINE_3 */
+  }
+  /* USER CODE BEGIN EXTI3_IRQn 1 */
+
+  /* USER CODE END EXTI3_IRQn 1 */
+}
+
+/**
   * @brief This function handles TIM2 global interrupt.
   */
 void TIM2_IRQHandler(void)
@@ -219,6 +245,7 @@ void TIM2_IRQHandler(void)
 /**
   * @brief This function handles I2C1 event global interrupt / I2C1 wake-up interrupt through EXT line 23.
   */
+
 
 /* USER CODE BEGIN 1 */
 

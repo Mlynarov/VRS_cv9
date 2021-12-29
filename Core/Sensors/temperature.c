@@ -66,7 +66,7 @@ int16_t HTS221_Get_Temperature()
  uint8_t buffer[4], tmp,sign;
  int32_t tmp32;
 
- sign=10000000;
+ sign=0b10000000;
 
 /*1. Read from 0x32 & 0x33 registers the value of coefficients T0_degC_x8 and T1_degC_x8*/
  temperature_readArray(buffer,HTS_TO_DEGC_REG,2);

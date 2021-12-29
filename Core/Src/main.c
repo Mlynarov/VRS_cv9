@@ -49,6 +49,7 @@
 uint8_t temp = 0;
 float mag[3], acc[3];
 char displayText[15];
+uint8_t mode;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -116,12 +117,12 @@ int main(void)
   while (1)
   {
 	  //lsm6ds0_get_acc(acc, (acc+1), (acc+2));
-	  printTemperature();
-	  float altitude = get_altitude();
-
-
-	  //readI2C();
-	  LL_mDelay(50);
+	  if(mode == 0){
+		  printTemperature();
+	  }
+	  else if(mode == 1){
+		  float altitude = get_altitude();
+	  }
 
     /* USER CODE END WHILE */
 
