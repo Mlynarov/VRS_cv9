@@ -108,8 +108,7 @@ int main(void)
   LL_TIM_EnableCounter(TIM2);
 
   lsm6ds0_init();
-  temperature_init();
-  humidity_init();
+  hts_sensore_init();
   pressure_init();
 
   resetAllDigits();

@@ -6,21 +6,18 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Core/Sensors/altitudePressure.c \
-../Core/Sensors/humiditi.c \
-../Core/Sensors/lps25hb.c \
-../Core/Sensors/temperature.c 
+../Core/Sensors/hts.c \
+../Core/Sensors/lps25hb.c 
 
 OBJS += \
 ./Core/Sensors/altitudePressure.o \
-./Core/Sensors/humiditi.o \
-./Core/Sensors/lps25hb.o \
-./Core/Sensors/temperature.o 
+./Core/Sensors/hts.o \
+./Core/Sensors/lps25hb.o 
 
 C_DEPS += \
 ./Core/Sensors/altitudePressure.d \
-./Core/Sensors/humiditi.d \
-./Core/Sensors/lps25hb.d \
-./Core/Sensors/temperature.d 
+./Core/Sensors/hts.d \
+./Core/Sensors/lps25hb.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
