@@ -107,9 +107,8 @@ int main(void)
   LL_TIM_EnableIT_UPDATE(TIM2);
   LL_TIM_EnableCounter(TIM2);
 
-  lsm6ds0_init();
-  hts_sensore_init();
-  pressure_init();
+  uint8_t htsSensorStatus = hts_sensore_init();
+  uint8_t pressureSensorStatus = pressure_init();
 
   resetAllDigits();
 
@@ -121,16 +120,36 @@ int main(void)
   {
 	  //lsm6ds0_get_acc(acc, (acc+1), (acc+2));
 	  if(mode == 0){
-		  printTemperature();
+		  if(htsSensorStatus == 1){
+			  printTemperature();
+		  }
+		  else if(htsSensorStatus == 0){
+			  mode +=1;
+		  }
 	  }
 	  else if(mode == 1){
-		  printHumidity();
+		  if(htsSensorStatus == 1){
+			  printHumidity();
+		  }
+		  else if(htsSensorStatus == 0){
+			  mode +=1;
+		  }
 	  }
 	  else if(mode == 2){
-		  printPressure();
+		  if(pressureSensorStatus == 1){
+			  printPressure();
+		  }
+		  else if(pressureSensorStatus == 0){
+			  mode +=1;
+		  }
 	  }
 	  else if(mode == 3){
-		  printAltitude();
+		  if(pressureSensorStatus == 1 && htsSensorStatus == 1){
+			  printAltitude();
+		  }
+		  else if(pressureSensorStatus == 0 || htsSensorStatus == 0){
+			  mode +=1;
+		  }
 	  }
     /* USER CODE END WHILE */
 
