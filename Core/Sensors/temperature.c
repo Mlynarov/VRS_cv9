@@ -39,7 +39,7 @@ uint8_t temperature_init(void)
 
 	LL_mDelay(100);
 
-	uint8_t val = temperature_read_byte(HTS_WHO_AM_I	);
+	uint8_t val = temperature_read_byte(HTS_WHO_AM_I);
 
 	if(val == HTS_WHO_AM_I_DEFAULT)
 	{
@@ -100,10 +100,9 @@ int16_t HTS221_Get_Temperature()
 // temperature_write_byte(HTS221_CTRL_REG1,value);//neni som si isty reg_addresou
 
  //podmienka pre zistenie ci je teplota kladna alebo zaporna
- if(HTS_T_OUT_High==sign){
+ if(temperature_read_byte(HTS_T_OUT_High)==sign){
 	 value = value*(-1);
  }
-
 
  return value;
 }

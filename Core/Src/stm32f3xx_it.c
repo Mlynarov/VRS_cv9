@@ -220,7 +220,7 @@ void EXTI3_IRQHandler(void)
 		mode++;
 		displayTextPos = 0;
 	}
-	LL_mDelay(100);
+	LL_mDelay(500);
 	LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_3);
     /* USER CODE END LL_EXTI_LINE_3 */
   }

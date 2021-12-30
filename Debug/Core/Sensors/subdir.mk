@@ -7,16 +7,19 @@
 C_SRCS += \
 ../Core/Sensors/altitudePressure.c \
 ../Core/Sensors/humiditi.c \
+../Core/Sensors/lps25hb.c \
 ../Core/Sensors/temperature.c 
 
 OBJS += \
 ./Core/Sensors/altitudePressure.o \
 ./Core/Sensors/humiditi.o \
+./Core/Sensors/lps25hb.o \
 ./Core/Sensors/temperature.o 
 
 C_DEPS += \
 ./Core/Sensors/altitudePressure.d \
 ./Core/Sensors/humiditi.d \
+./Core/Sensors/lps25hb.d \
 ./Core/Sensors/temperature.d 
 
 
